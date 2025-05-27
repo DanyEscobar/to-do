@@ -15,7 +15,7 @@ Aplicación móvil desarrollada con **Ionic + Angular + Capacitor**.
   [Captura 2](https://prnt.sc/wM75ZcteWM-5)
 
 - ☁️ **Netlify:**  
-  [Netlify](https://to-do-app-0125.netlify.app/home) 
+  [Netlify](https://to-do-app-0125.netlify.app) 
 
 
 ## ✅ Características iniciales
