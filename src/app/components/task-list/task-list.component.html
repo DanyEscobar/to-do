@@ -1,0 +1,25 @@
+<ion-list>
+  @for (task of filteredTasks(); track $index) {
+    <ion-item>
+      <ion-label>
+        <h2 [class.completed]="task.completed">{{ task.title }}</h2>
+        <p *ngIf="task.category">{{ task.category }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" aria-label="Editar" (click)="editTask.emit(task)" title="Editar tarea">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" aria-label="Eliminar" (click)="openDeleteModal(task.id)" title="Eliminar tarea">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-checkbox aria-label="Check" role="Check" slot="end" [checked]="task.completed" (ionChange)="toggleComplete(task)"></ion-checkbox>
+    </ion-item>
+  }
+</ion-list>
+
+<app-delete-modal
+  [open]="modalOpen()"
+  (confirm)="confirmDelete()"
+  (cancel)="cancelDelete()"
+></app-delete-modal>

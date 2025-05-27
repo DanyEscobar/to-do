@@ -1,0 +1,22 @@
+
+.my-header {
+  top: 30px !important;
+  background-color: #1976d2;
+  color: white;
+}
+
+.ion-padding {
+  top: 30px !important;
+
+  .ion-item-category {
+    margin-top: 30px;
+  }
+}
+
+.ion-text-none {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  color: gray;
+}
+
