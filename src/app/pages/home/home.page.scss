@@ -7,10 +7,6 @@
 
 .ion-padding {
   top: 30px !important;
-
-  .ion-item-category {
-    margin-top: 30px;
-  }
 }
 
 .ion-text-none {
@@ -18,5 +14,11 @@
   justify-content: center;
   margin-top: 30px;
   color: gray;
+}
+
+.ion-title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 

@@ -96,6 +96,7 @@ export class HomePage implements OnInit {
     this.taskService.deleteTask(taskId);
     this.tasks.set(this.taskService.getTasks());
     this.presentToast('Tarea eliminada');
+    this.editMode.set(false);
   }
 
   getUniqueCategories(): (string | undefined)[] {

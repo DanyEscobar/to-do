@@ -34,11 +34,15 @@ export class TaskFormComponent  implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['task'] && this.task) {
+    if (changes['task'] && this.task()) {
       this.taskForm.patchValue({
         title: this.task()?.title,
         category: this.task()?.category ?? ''
       });
+    }
+
+    if (!this.editMode()) {
+      this.taskForm.reset();
     }
   }
 
