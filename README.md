@@ -80,14 +80,21 @@ export const environment = {
   }
 };
 ```
-### Links
+# 📱 To-Do App
 
-Apk: https://drive.google.com/file/d/1kqlzw0cc5DI0qWvIapbjGI6apAwkahnq/view?usp=drive_link
+Aplicación móvil desarrollada con **Ionic + Angular + Capacitor**.
 
-Video: https://drive.google.com/file/d/1m57h53FjZ3JgnX20t9rwzHcVxvLDPady/view?usp=drive_link
+## 🚀 Demo
 
-Capturas-Firebase: https://prnt.sc/xfZanNuRU5v_ 
-                   https://prnt.sc/wM75ZcteWM-5
+- 📦 **APK descargable:**  
+  [Descargar APK](https://drive.google.com/file/d/1kqlzw0cc5DI0qWvIapbjGI6apAwkahnq/view?usp=drive_link)
+
+- 🎥 **Video de demostración:**  
+  [Ver video demo](https://drive.google.com/file/d/1m57h53FjZ3JgnX20t9rwzHcVxvLDPady/view?usp=drive_link)
+
+- ☁️ **Capturas de Firebase:**  
+  [Captura 1](https://prnt.sc/xfZanNuRU5v_)  
+  [Captura 2](https://prnt.sc/wM75ZcteWM-5)
 
 
 ### 📄 `android/settings.gradle` recomendado
