@@ -64,18 +64,7 @@ ionic build --prod
 ionic cap copy
 ```
 
-### 📄 `android/settings.gradle` recomendado
-```gradle
-include ':app'
-include ':capacitor-cordova-android-plugins'
-
-project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins')
-
-apply from: './capacitor.settings.gradle'
-
----
-
-## 3. 🌐 Configuración Firebase
+### 3. 🌐 Configuración Firebase
 
 ### firebase-config.ts
 ```ts
@@ -92,3 +81,16 @@ export const environment = {
   }
 };
 ```
+
+### 📄 `android/settings.gradle` recomendado
+```gradle
+include ':app'
+include ':capacitor-cordova-android-plugins'
+
+project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins')
+
+apply from: './capacitor.settings.gradle'
+
+---
+
+
