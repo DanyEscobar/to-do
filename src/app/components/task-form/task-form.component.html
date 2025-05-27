@@ -1,4 +1,4 @@
-<form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+<form class="form" [formGroup]="taskForm" (ngSubmit)="submitForm()">
   <ion-item>
     <ion-label position="stacked">Título</ion-label>
     <ion-input formControlName="title" placeholder="Escribe la tarea..."></ion-input>
@@ -13,7 +13,7 @@
     {{ editMode() ? 'Actualizar' : 'Agregar' }} tarea
   </ion-button>
   @if (editMode()) {
-    <ion-button expand="block" aria-label="Cancelar edición" color="danger" (click)="cancelEdit()">
+    <ion-button class="ion-button-cancel" expand="block" aria-label="Cancelar edición" color="danger" (click)="cancelEdit()">
       Cancelar edición
     </ion-button>
   }
