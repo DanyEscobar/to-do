@@ -13,9 +13,8 @@
 
 ## 1. 🚀 Iniciar proyecto Ionic
 ```bash
-npm install -g @ionic/cli
-ionic start todoApp blank --type=angular
-cd todoApp
+npm install
+ionic serve
 ```
 
 ## 2. 📱 Configuración Híbrida (Android/iOS)
