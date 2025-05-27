@@ -13,7 +13,10 @@ Aplicación móvil desarrollada con **Ionic + Angular + Capacitor**.
 - ☁️ **Capturas de Firebase:**  
   [Captura 1](https://prnt.sc/xfZanNuRU5v_)  
   [Captura 2](https://prnt.sc/wM75ZcteWM-5)
-  
+
+- ☁️ **Netlify:**  
+  [Netlify](https://to-do-app-0125.netlify.app/home) 
+
 
 ## ✅ Características iniciales
 - [x] Crear tareas
