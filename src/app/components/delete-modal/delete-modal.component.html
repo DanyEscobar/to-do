@@ -1,16 +1,38 @@
-<ion-modal [isOpen]="open()" (willDismiss)="onCancel()">
+<ion-modal [isOpen]="open()" (willDismiss)="onCancel()" class="delete-modal">
   <ng-template>
-    <ion-header class="ion-header">
-      <ion-toolbar color="danger">
-        <ion-title>Confirmar eliminación</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <p>¿Estás seguro de que deseas eliminar esta tarea?</p>
-      <div class="ion-text-end">
-        <ion-button fill="clear" aria-label="Cancelar" (click)="onCancel()">Cancelar</ion-button>
-        <ion-button color="danger" aria-label="Eliminar" (click)="onConfirm()">Eliminar</ion-button>
+    <div class="modal-content animate-scale-in">
+      <div class="modal-icon">
+        <ion-icon name="alert-circle-outline" color="danger"></ion-icon>
       </div>
-      </ion-content>
+
+      <h2 class="modal-title">{{ title() }}</h2>
+      <p class="modal-message">{{ message() }}</p>
+
+      <div class="modal-actions">
+        <ion-button
+          fill="outline"
+          color="medium"
+          expand="block"
+          (click)="onCancel()"
+          aria-label="Cancelar"
+          (keydown.enter)="onCancel()"
+          (keydown.space)="onCancel()"
+        >
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          Cancelar
+        </ion-button>
+        <ion-button
+          color="danger"
+          expand="block"
+          (click)="onConfirm()"
+          aria-label="Eliminar"
+          (keydown.enter)="onConfirm()"
+          (keydown.space)="onConfirm()"
+        >
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Eliminar
+        </ion-button>
+      </div>
+    </div>
   </ng-template>
 </ion-modal>

@@ -1,24 +1,112 @@
+/* ─── Home Page — Premium Styles ──────────────── */
 
-.my-header {
-  top: 30px !important;
-  background-color: #1976d2;
-  color: white;
+.home-header {
+  ion-toolbar {
+    --background: var(--app-gradient-primary);
+    --color: #fff;
+    --min-height: 56px;
+  }
+
+  .header-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .header-pill-btn {
+    --background: #ffffff;
+    --color: #1f2937;
+    color: #1f2937 !important;
+    --border-radius: 50px;
+    --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-size: 14px;
+    font-weight: 700;
+    height: 36px;
+    margin-right: 8px;
+    text-transform: none;
+    letter-spacing: 0.2px;
+
+    &::part(native) {
+      padding: 0 16px;
+      color: #1f2937;
+    }
+
+    ion-icon {
+      font-size: 18px;
+      margin-right: 6px;
+      color: #1f2937;
+    }
+
+    &:hover {
+      --background: #f8fafc;
+      --color: #1f2937;
+      transform: translateY(-1px);
+    }
+  }
 }
 
-.ion-padding {
-  top: 30px !important;
+.home-content {
+  --background: var(--ion-background-color);
+  --padding-top: 16px;
 }
 
-.ion-text-none {
+/* ─── Section Header ────────────────────────── */
+.section-header {
   display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  color: gray;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 4px;
 }
 
-.ion-title {
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
   display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
+  align-items: center;
+  gap: 6px;
+  color: var(--ion-text-color);
+
+  .title-icon {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+  }
 }
+
+/* ─── Filter Chips ──────────────────────────── */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 0 2px;
+
+  ion-chip {
+    height: 32px;
+    font-size: 13px;
+    font-weight: 600;
+    --padding-start: 10px;
+    --padding-end: 12px;
+    border-radius: 50px;
+    transition: var(--app-transition);
+    border: 1.5px solid transparent;
+
+    &:not(.chip-active) {
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+
+    &.chip-active {
+      box-shadow: var(--app-shadow-md);
+      transform: scale(1.02);
+    }
+
+    .category-dot {
+      width: 8px;
+      height: 8px;
+      margin-right: 5px;
+    }
+  }
+}
+
 

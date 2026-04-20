@@ -1,0 +1,86 @@
+<ion-header class="categories-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon name="pricetags-outline" class="header-icon"></ion-icon>
+      Categorías
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding categories-content">
+
+  <!-- Formulario de categoría -->
+  <app-category-form
+    [editMode]="editMode()"
+    [category]="categoryToEdit()"
+    (categorySaved)="onCategorySaved($event)"
+    (editCancel)="onEditCancel()"
+  ></app-category-form>
+
+  <!-- Título de sección -->
+  <div class="section-header animate-fade-in">
+    <h2 class="section-title">Mis Categorías</h2>
+    <span class="section-count">{{ categoryService.allCategories().length }}</span>
+  </div>
+
+  <!-- Lista de categorías -->
+  @if (categoryService.allCategories().length > 0) {
+    <ion-list class="category-list stagger-list" lines="none">
+      @for (cat of categoryService.allCategories(); track cat.id) {
+        <ion-item class="category-item">
+          <!-- Indicador de color -->
+          <div class="color-indicator" slot="start" [style.background-color]="cat.color"></div>
+
+          <!-- Nombre -->
+          <ion-label>
+            <h2 class="category-name">{{ cat.name }}</h2>
+          </ion-label>
+
+          <!-- Acciones -->
+          <ion-buttons slot="end" class="action-buttons">
+            <ion-button 
+              fill="clear" 
+              (click)="onEdit(cat)" 
+              aria-label="Editar categoría" 
+              title="Editar"
+              (keydown.enter)="onEdit(cat)" 
+              (keydown.space)="onEdit(cat)"
+            >
+              <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button 
+              fill="clear" 
+              color="danger" 
+              (click)="openDeleteModal(cat.id)" 
+              aria-label="Eliminar categoría" 
+              title="Eliminar"
+              (keydown.enter)="openDeleteModal(cat.id)" 
+              (keydown.space)="openDeleteModal(cat.id)"
+            >
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      }
+    </ion-list>
+  } @else {
+    <div class="empty-state">
+      <ion-icon name="pricetags-outline"></ion-icon>
+      <h3>Sin categorías</h3>
+      <p>Crea tu primera categoría para organizar tus tareas</p>
+    </div>
+  }
+
+</ion-content>
+
+<!-- Modal de eliminación -->
+<app-delete-modal
+  [open]="modalOpen()"
+  title="Eliminar categoría"
+  message="¿Estás seguro? Las tareas asociadas perderán esta categoría."
+  (confirm)="confirmDelete()"
+  (cancel)="cancelDelete()"
+></app-delete-modal>

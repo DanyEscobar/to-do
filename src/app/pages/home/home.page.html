@@ -1,43 +1,103 @@
-<ion-header class="my-header">
-  <ion-toolbar color="primary">
-    <ion-title>ToDo App</ion-title>
+<!-- Header con gradiente premium -->
+<ion-header class="home-header">
+  <ion-toolbar>
+    <ion-title>
+      <span class="header-title">📋 ToDo App</span>
+    </ion-title>
+    @if (showCategories()) {
+      <ion-buttons slot="end">
+        <ion-button 
+          class="header-pill-btn" 
+          fill="solid" 
+          (click)="goToCategories()"
+          (keydown.enter)="goToCategories()" 
+          (keydown.space)="goToCategories()"
+          aria-label="Gestionar categorías"
+        >
+          <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+          Categorías
+        </ion-button>
+      </ion-buttons>
+    }
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="home-content ion-padding">
+
+  <!-- Estadísticas rápidas -->
+  @if (tasks().length > 0) {
+    <div class="stats-row animate-fade-in-up">
+      <div class="stat-card stat-total">
+        <div class="stat-value">{{ totalTasks() }}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card stat-completed">
+        <div class="stat-value">{{ completedTasks() }}</div>
+        <div class="stat-label">Hechas</div>
+      </div>
+      <div class="stat-card stat-pending">
+        <div class="stat-value">{{ pendingTasks() }}</div>
+        <div class="stat-label">Pendientes</div>
+      </div>
+    </div>
+  }
+
+  <!-- Formulario de tarea -->
   <app-task-form
     [task]="taskToEdit()"
     [editMode]="editMode()"
+    [categories]="categories()"
+    [showCategories]="showCategories()"
     (taskCreated)="onTaskCreated($event)"
     (editCancel)="editMode.set(false)"
   ></app-task-form>
 
-  <ion-label class="ion-title">Listado de Tareas</ion-label>
+  <!-- Título de sección + filtros -->
+  <div class="section-header animate-fade-in">
+    <h2 class="section-title">
+      <ion-icon name="list-outline" class="title-icon"></ion-icon>
+      Mis Tareas
+    </h2>
+  </div>
 
-  @if (showCategories()) {
-    <ion-item class="ion-item-category">
-      <ion-label>Categoría</ion-label>
-      <ion-select
-        [value]="selectedCategory()"
-        (ionChange)="onCategorySelected($event.detail.value)"
+  <!-- Chips de filtro por categoría -->
+  @if (showCategories() && categories().length > 0) {
+    <div class="filter-chips animate-fade-in">
+      <ion-chip
+        [class.chip-active]="selectedCategory() === ''"
+        (click)="onCategorySelected('')"
+        (keydown.enter)="onCategorySelected('')" 
+        (keydown.space)="onCategorySelected('')"
+        aria-label="Ver todas las tareas"
       >
-        <ion-select-option value="">Todas</ion-select-option>
-        @for (category of getUniqueCategories(); track $index) {
-          <ion-select-option [value]="category">{{ category }}</ion-select-option>
-        }
-      </ion-select>
-    </ion-item>
+        <ion-label>Todas</ion-label>
+      </ion-chip>
+      @for (cat of categories(); track cat.id) {
+        <ion-chip
+          [class.chip-active]="selectedCategory() === cat.id"
+          (click)="onCategorySelected(cat.id)"
+          [style.--background]="selectedCategory() === cat.id ? cat.color : cat.color + '18'"
+          [style.--color]="selectedCategory() === cat.id ? '#fff' : cat.color"
+          [attr.aria-label]="'Filtrar por ' + cat.name"
+          (keydown.enter)="onCategorySelected(cat.id)" 
+          (keydown.space)="onCategorySelected(cat.id)"
+        >
+          <span class="category-dot" [style.background-color]="selectedCategory() === cat.id ? '#fff' : cat.color"></span>
+          <ion-label>{{ cat.name }}</ion-label>
+        </ion-chip>
+      }
+    </div>
   }
 
+  <!-- Lista de tareas -->
   <app-task-list
     [tasks]="tasks()"
     [filterByCategory]="selectedCategory()"
     (editTask)="onEdit($event)"
     (deleteTask)="onDelete($event)"
+    (toggleTask)="onToggle()"
   ></app-task-list>
 
-  @if (!tasks().length) {
-    <ion-label class="ion-text-none">Aún no hay tareas, agrega una</ion-label>
-  }
+
 
 </ion-content>

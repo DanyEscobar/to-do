@@ -1,0 +1,79 @@
+<ion-card class="form-card animate-fade-in-up">
+  <ion-card-content>
+    <form [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+
+      <!-- Nombre de la categoría -->
+      <ion-input
+        class="form-input"
+        mode="md"
+        fill="outline"
+        formControlName="name"
+        placeholder="Nombre de la categoría"
+        [clearInput]="true"
+        type="text"
+        label="Categoría"
+        labelPlacement="floating"
+        maxlength="30"
+      ></ion-input>
+
+      <!-- Selector de color -->
+      <div class="color-section">
+        <p class="color-label">Color</p>
+        <div class="color-grid">
+          @for (color of availableColors; track color) {
+            <button
+              type="button"
+              class="color-swatch"
+              [class.active]="selectedColor() === color"
+              [style.background-color]="color"
+              (click)="selectColor(color)"
+              [attr.aria-label]="'Seleccionar color ' + color"
+            >
+              @if (selectedColor() === color) {
+                <ion-icon name="checkmark-outline" class="check-icon"></ion-icon>
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-section">
+        <span class="preview-chip" [style.background-color]="selectedColor() + '18'" [style.color]="selectedColor()">
+          <span class="category-dot" [style.background-color]="selectedColor()"></span>
+          {{ categoryForm.value.name || 'Vista previa' }}
+        </span>
+      </div>
+
+      <!-- Botones -->
+      <div class="form-actions">
+        <ion-button
+          class="submit-btn"
+          expand="block"
+          type="submit"
+          [disabled]="categoryForm.invalid"
+          aria-label="Guardar categoría"
+        >
+          <ion-icon [name]="editMode() ? 'checkmark-outline' : 'add-outline'" slot="start"></ion-icon>
+          {{ editMode() ? 'Actualizar' : 'Crear' }} Categoría
+        </ion-button>
+
+        @if (editMode()) {
+          <ion-button
+            class="cancel-btn"
+            expand="block"
+            fill="outline"
+            color="medium"
+            (click)="cancelEdit()"
+            aria-label="Cancelar edición"
+            (keydown.enter)="cancelEdit()"
+            (keydown.space)="cancelEdit()"
+          >
+            <ion-icon name="close-outline" slot="start"></ion-icon>
+            Cancelar
+          </ion-button>
+        }
+      </div>
+    </form>
+  </ion-card-content>
+</ion-card>

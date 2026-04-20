@@ -1,21 +1,70 @@
-<form class="form" [formGroup]="taskForm" (ngSubmit)="submitForm()">
-  <ion-item>
-    <ion-label position="stacked">Título</ion-label>
-    <ion-input formControlName="title" placeholder="Escribe la tarea..."></ion-input>
-  </ion-item>
+<ion-card class="form-card animate-fade-in-up">
+  <ion-card-content>
+    <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
 
-  <ion-item class="ion-item-category">
-    <ion-label position="stacked">Categoría</ion-label>
-    <ion-input formControlName="category" placeholder="Escribe la categoría..."></ion-input>
-  </ion-item>
+      <!-- Título de la tarea -->
+      <ion-input
+        class="form-input"
+        mode="md"
+        fill="outline"
+        formControlName="title"
+        placeholder="¿Qué necesitas hacer?"
+        [clearInput]="true"
+        type="text"
+        label="Tarea"
+        labelPlacement="floating"
+      ></ion-input>
 
-  <ion-button class="ion-button-submit" expand="block" type="submit" aria-label="Tarea" [disabled]="taskForm.invalid">
-    {{ editMode() ? 'Actualizar' : 'Agregar' }} tarea
-  </ion-button>
-  @if (editMode()) {
-    <ion-button class="ion-button-cancel" expand="block" aria-label="Cancelar edición" color="danger" (click)="cancelEdit()">
-      Cancelar edición
-    </ion-button>
-  }
+      <!-- Selector de categoría (controlado por feature flag) -->
+      @if (showCategories() && categories().length > 0) {
+        <ion-select
+          class="form-input category-select"
+          mode="md"
+          fill="outline"
+          formControlName="categoryId"
+          placeholder="Sin categoría"
+          label="Categoría"
+          labelPlacement="floating"
+          interface="popover"
+        >
+          <ion-select-option value="">Sin categoría</ion-select-option>
+          @for (cat of categories(); track cat.id) {
+            <ion-select-option [value]="cat.id">
+              {{ cat.name }}
+            </ion-select-option>
+          }
+        </ion-select>
+      }
 
-</form>
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <ion-button
+          class="submit-btn"
+          expand="block"
+          type="submit"
+          [disabled]="taskForm.invalid"
+          aria-label="Guardar tarea"
+        >
+          <ion-icon [name]="editMode() ? 'checkmark-outline' : 'add-outline'" slot="start"></ion-icon>
+          {{ editMode() ? 'Actualizar' : 'Agregar' }} Tarea
+        </ion-button>
+
+        @if (editMode()) {
+          <ion-button
+            class="cancel-btn"
+            expand="block"
+            fill="outline"
+            color="medium"
+            (click)="cancelEdit()"
+            aria-label="Cancelar edición"
+            (keydown.enter)="cancelEdit()"
+            (keydown.space)="cancelEdit()"
+          >
+            <ion-icon name="close-outline" slot="start"></ion-icon>
+            Cancelar
+          </ion-button>
+        }
+      </div>
+    </form>
+  </ion-card-content>
+</ion-card>

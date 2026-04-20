@@ -1,3 +1,53 @@
-.ion-header, .ion-padding {
-  top: 30px !important;
+.delete-modal {
+  --width: 340px;
+  --max-width: 90%;
+  --height: auto;
+  --max-height: 90%;
+  --border-radius: var(--app-radius-xl);
+  --box-shadow: var(--app-shadow-lg);
+
+  &::part(backdrop) {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+}
+
+.modal-content {
+  padding: 32px 24px 24px;
+  text-align: center;
+}
+
+.modal-icon {
+  margin-bottom: 16px;
+
+  ion-icon {
+    font-size: 56px;
+    opacity: 0.9;
+  }
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--ion-text-color);
+}
+
+.modal-message {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+
+  ion-button {
+    flex: 1;
+    --border-radius: var(--app-radius-md);
+    font-weight: 600;
+    height: 44px;
+  }
 }

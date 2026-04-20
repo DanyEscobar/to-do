@@ -1,12 +1,6 @@
 /*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
+ * App Global CSS — Premium Design System
+ * ──────────────────────────────────────────
  */
 
 /* Core CSS required for Ionic components to work properly */
@@ -18,20 +12,330 @@
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Optional CSS utils */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+/* Dark mode via system preference */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* ─── Global Typography ─────────────────────── */
+* {
+  font-family: var(--ion-font-family);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Animations Keyframes ──────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Utility Classes ───────────────────────── */
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Stagger children animations */
+.stagger-list > * {
+  animation: fadeInUp 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@for $i from 1 through 20 {
+  .stagger-list > *:nth-child(#{$i}) {
+    animation-delay: #{$i * 0.04}s;
+  }
+}
+
+/* ─── Glass Card ────────────────────────────── */
+.glass-card {
+  background: var(--app-glass-bg);
+  backdrop-filter: blur(var(--app-glass-blur));
+  -webkit-backdrop-filter: blur(var(--app-glass-blur));
+  border: 1px solid var(--app-glass-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-md);
+  transition: var(--app-transition);
+
+  &:hover {
+    box-shadow: var(--app-shadow-lg);
+    transform: translateY(-1px);
+  }
+}
+
+/* ─── Premium ion-card ──────────────────────── */
+ion-card {
+  border-radius: var(--app-radius-lg) !important;
+  box-shadow: var(--app-shadow-md) !important;
+  transition: var(--app-transition);
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: var(--app-shadow-lg) !important;
+  }
+
+  ion-card-header {
+    padding: 20px 20px 8px;
+  }
+
+  ion-card-content {
+    padding: 8px 20px 20px;
+  }
+}
+
+/* ─── Premium ion-item ──────────────────────── */
+ion-item {
+  --border-radius: var(--app-radius-md);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 8px;
+  transition: var(--app-transition);
+}
+
+/* ─── Premium Buttons ───────────────────────── */
+ion-button {
+  --border-radius: var(--app-radius-md);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: var(--app-transition);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--app-shadow-md);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* ─── Premium Header ────────────────────────── */
+ion-toolbar {
+  --border-width: 0 !important;
+}
+
+ion-header {
+  &::after {
+    display: none !important;
+  }
+}
+
+/* ─── Input Styling ─────────────────────────── */
+ion-input, ion-select {
+  --border-radius: var(--app-radius-sm);
+  font-size: 15px;
+}
+
+/* ─── Chip Styling ──────────────────────────── */
+ion-chip {
+  --border-radius: 50px;
+  font-weight: 500;
+  transition: var(--app-transition);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--app-shadow-sm);
+  }
+
+  &.chip-active {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-primary-contrast);
+    box-shadow: var(--app-shadow-glow);
+  }
+}
+
+/* ─── Badge ─────────────────────────────────── */
+ion-badge {
+  --border-radius: 50px;
+  font-weight: 600;
+  padding: 4px 12px;
+}
+
+/* ─── FAB Button ────────────────────────────── */
+ion-fab-button {
+  --box-shadow: var(--app-shadow-lg);
+  transition: var(--app-transition);
+
+  &:hover {
+    transform: scale(1.08);
+    --box-shadow: var(--app-shadow-glow);
+  }
+}
+
+/* ─── Modal ─────────────────────────────────── */
+ion-modal {
+  --border-radius: var(--app-radius-xl) var(--app-radius-xl) 0 0;
+
+  &.modal-card {
+    --border-radius: var(--app-radius-xl);
+  }
+}
+
+/* ─── Toast ─────────────────────────────────── */
+ion-toast {
+  --border-radius: var(--app-radius-md);
+  font-weight: 500;
+}
+
+/* ─── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ion-color-medium);
+  border-radius: 10px;
+}
+
+/* ─── Category Color Dot ────────────────────── */
+.category-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+/* ─── Empty State ───────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease both;
+
+  ion-icon {
+    font-size: 64px;
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ion-text-color);
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--ion-color-medium);
+    margin: 0;
+    max-width: 280px;
+  }
+}
+
+/* ─── Stats Card ────────────────────────────── */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  padding: 0 4px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 95px;
+  background: var(--app-glass-bg);
+  backdrop-filter: blur(var(--app-glass-blur));
+  border: 1px solid var(--app-glass-border);
+  border-radius: var(--app-radius-md);
+  padding: 14px 12px;
+  text-align: center;
+  transition: var(--app-transition);
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ion-color-medium);
+  }
+
+  &.stat-total .stat-value { color: var(--ion-color-primary); }
+  &.stat-completed .stat-value { color: var(--ion-color-success); }
+  &.stat-pending .stat-value { color: var(--ion-color-warning); }
+}

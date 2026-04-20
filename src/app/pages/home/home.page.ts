@@ -1,116 +1,144 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import {
-  IonSelect,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonItem,
-  IonLabel,
-  IonSelectOption
+  IonHeader, IonToolbar, IonTitle, IonContent,
+  IonButton, IonButtons, IonIcon, IonChip, IonLabel
 } from '@ionic/angular/standalone';
-import { Task } from 'src/app/interfaces/task.interface';
-import { TaskService } from 'src/app/services/task.service';
-import { TaskFormComponent } from "../../components/task-form/task-form.component";
-import { TaskListComponent } from "../../components/task-list/task-list.component";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ConfigService } from 'src/app/services/config.service';
+import { Task } from '../../interfaces/task.interface';
+import { Category } from '../../interfaces/category.interface';
+import { TaskService } from '../../services/task.service';
+import { CategoryService } from '../../services/category.service';
+import { ConfigService } from '../../services/config.service';
+import { TaskFormComponent } from '../../components/task-form/task-form.component';
+import { TaskListComponent } from '../../components/task-list/task-list.component';
 import { ToastController } from '@ionic/angular';
 import { Preferences } from '@capacitor/preferences';
+import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import {
+  pricetagsOutline, checkmarkDoneOutline, listOutline,
+  funnelOutline, settingsOutline, speedometerOutline
+} from 'ionicons/icons';
 
+/**
+ * Página principal de la aplicación To-Do.
+ * Muestra el formulario de tareas, filtros por categoría y la lista de tareas.
+ */
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    TaskFormComponent,
-    IonItem,
-    IonLabel,
-    IonSelect,
-    IonSelectOption,
-    TaskListComponent,
-    FormsModule,
-    ReactiveFormsModule,
+    IonHeader, IonToolbar, IonTitle, IonContent,
+    IonButton, IonButtons, IonIcon, IonChip, IonLabel,
+    TaskFormComponent, TaskListComponent,
   ],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage implements OnInit {
 
   private readonly taskService = inject(TaskService);
+  private readonly categoryService = inject(CategoryService);
   private readonly configService = inject(ConfigService);
   private readonly toastController = inject(ToastController);
-  public tasks = signal<Task[]>([]);
+  private readonly router = inject(Router);
+
+  /** Estado reactivo directamente de los servicios */
+  public tasks = this.taskService.allTasks;
+  public categories = this.categoryService.allCategories;
+  
   public selectedCategory = signal<string>('');
   public editMode = signal<boolean>(false);
   public taskToEdit = signal<Task | undefined>(undefined);
+
+  /** Feature flag de Firebase */
   public showCategories = this.configService.showCategories;
 
-  constructor() {}
+  /** Estadísticas computadas */
+  public totalTasks = computed(() => this.tasks().length);
+  public completedTasks = computed(() => this.tasks().filter(t => t.completed).length);
+  public pendingTasks = computed(() => this.tasks().filter(t => !t.completed).length);
 
-  ngOnInit() {
-    this.initData();
+  constructor() {
+    addIcons({
+      pricetagsOutline, checkmarkDoneOutline, listOutline,
+      funnelOutline, settingsOutline, speedometerOutline
+    });
   }
 
-  private async initData(): Promise<void> {
-    await this.onTaskLoad();
+  async ngOnInit(): Promise<void> {
+    await this.initData();
+  }
 
+  /** Inicializa datos de tareas, categorías y filtro persistido */
+  private async initData(): Promise<void> {
+    await Promise.all([
+      this.taskService.loadTasks(),
+      this.categoryService.loadCategories(),
+    ]);
+
+    // Restaurar filtro de categoría seleccionado
     const { value } = await Preferences.get({ key: 'selectedCategory' });
     if (value) {
       this.selectedCategory.set(value);
     }
   }
 
-  async onTaskLoad(): Promise<void> {
-    await this.taskService.loadTasks();
-    this.tasks.set(this.taskService.getTasks());
-  }
-
+  /** Maneja la creación o actualización de una tarea */
   onTaskCreated(task: Task): void {
     if (this.editMode() && this.taskToEdit()) {
       this.taskService.updateTask(task);
       this.editMode.set(false);
       this.taskToEdit.set(undefined);
-      this.presentToast('Tarea actualizada');
+      this.presentToast('Tarea actualizada ✏️');
     } else {
       this.taskService.addTask(task);
-      this.presentToast('Tarea agregada');
+      this.presentToast('Tarea agregada ✅');
     }
-    this.tasks.set(this.taskService.getTasks());
   }
 
-  async onCategorySelected(category: string): Promise<void> {
-    this.selectedCategory.set(category);
-    await Preferences.set({ key: 'selectedCategory', value: category });
+  /** Selecciona una categoría para filtrar */
+  async onCategorySelected(categoryId: string): Promise<void> {
+    const newValue = this.selectedCategory() === categoryId ? '' : categoryId;
+    this.selectedCategory.set(newValue);
+    await Preferences.set({ key: 'selectedCategory', value: newValue });
   }
 
+  /** Inicia el modo edición de una tarea */
   onEdit(task: Task): void {
     this.editMode.set(true);
     this.taskToEdit.set({ ...task });
+
+    // Scroll hacia arriba para ver el formulario
+    const content = document.querySelector('ion-content');
+    content?.scrollToTop(300);
   }
 
+  /** Elimina una tarea */
   onDelete(taskId: string): void {
     this.taskService.deleteTask(taskId);
-    this.tasks.set(this.taskService.getTasks());
-    this.presentToast('Tarea eliminada');
+    this.presentToast('Tarea eliminada 🗑️');
     this.editMode.set(false);
   }
 
-  getUniqueCategories(): (string | undefined)[] {
-    const categories = this.tasks().map(t => t.category).filter(Boolean);
-    return [...new Set(categories)];
+  /** Actualiza datos al marcar/desmarcar una tarea */
+  onToggle(): void {
+    // La UI se actualiza automáticamente gracias a los signals
   }
 
-  async presentToast(message: string) {
+  /** Navega a la página de gestión de categorías */
+  goToCategories(): void {
+    this.router.navigate(['/categories']);
+  }
+
+  /** Muestra un toast */
+  private async presentToast(message: string): Promise<void> {
     const toast = await this.toastController.create({
       message,
       duration: 2000,
       position: 'bottom',
-      color: 'success'
+      color: 'success',
     });
-    toast.present();
+    await toast.present();
   }
 }
