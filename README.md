@@ -38,10 +38,11 @@ Aplicación móvil híbrida de gestión de tareas desarrollada con **Ionic 8**, 
 - ✅ Validación de nombres únicos
 - ✅ Categorías por defecto: Personal, Trabajo, Urgente, Compras
 
-### Filtrado y Organización
+### Filtros, Interfaz y UX
 - ✅ Chips de filtro por categoría
 - ✅ Filtro persistido en almacenamiento local
 - ✅ Estadísticas en tiempo real (total, completadas, pendientes)
+- ✅ Pull-to-Refresh nativo para resetear vista y forzar recarga remota
 
 ### Firebase Remote Config
 - ✅ Feature flag `showCategories` para activar/desactivar categorías
