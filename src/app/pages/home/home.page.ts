@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy, v
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButton, IonButtons, IonIcon, IonChip, IonLabel,
-  IonRefresher, IonRefresherContent, IonToast
+  IonRefresher, IonRefresherContent, IonToast, ToastController
 } from '@ionic/angular/standalone';
 import { Task } from '../../interfaces/task.interface';
 import { TaskService } from '../../services/task.service';
@@ -10,7 +10,6 @@ import { CategoryService } from '../../services/category.service';
 import { ConfigService } from '../../services/config.service';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
 import { TaskListComponent } from '../../components/task-list/task-list.component';
-import { ToastController } from '@ionic/angular';
 import { Preferences } from '@capacitor/preferences';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';

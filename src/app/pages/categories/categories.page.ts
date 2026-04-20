@@ -3,7 +3,7 @@ import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButtons, IonBackButton, IonButton, IonIcon,
   IonList, IonItem, IonLabel,
-  IonRefresher, IonRefresherContent, IonToast
+  IonRefresher, IonRefresherContent, IonToast, ToastController
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
@@ -14,7 +14,6 @@ import { CategoryFormComponent } from '../../components/category-form/category-f
 import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 import { addIcons } from 'ionicons';
 import { createOutline, trashOutline, arrowBackOutline, pricetagsOutline } from 'ionicons/icons';
-import { ToastController } from '@ionic/angular';
 
 /**
  * Página de gestión de categorías.
