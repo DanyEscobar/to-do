@@ -36,6 +36,7 @@ export class TaskListComponent {
   /** Inputs */
   public tasks = input<Task[]>([]);
   public filterByCategory = input<string>('');
+  public showCategories = input<boolean>(true);
 
   /** Outputs */
   public editTask = output<Task>();
@@ -48,7 +49,8 @@ export class TaskListComponent {
 
   /** Lista filtrada de tareas (señal computada para rendimiento) */
   public filteredTasks = computed(() => {
-    const category = this.filterByCategory();
+    const showCat = this.showCategories();
+    const category = showCat ? this.filterByCategory() : '';
     const allTasks = this.tasks();
     const filtered = category
       ? allTasks.filter(task => task.categoryId === category)

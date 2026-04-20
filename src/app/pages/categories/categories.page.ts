@@ -1,9 +1,12 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy, effect, viewChild } from '@angular/core';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButtons, IonBackButton, IonButton, IonIcon,
-  IonList, IonItem, IonLabel
+  IonList, IonItem, IonLabel,
+  IonRefresher, IonRefresherContent
 } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { ConfigService } from '../../services/config.service';
 import { CategoryService } from '../../services/category.service';
 import { TaskService } from '../../services/task.service';
 import { Category } from '../../interfaces/category.interface';
@@ -23,6 +26,7 @@ import { ToastController } from '@ionic/angular';
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonButtons, IonBackButton, IonButton, IonIcon,
     IonList, IonItem, IonLabel,
+    IonRefresher, IonRefresherContent,
     CategoryFormComponent, DeleteModalComponent,
   ],
   standalone: true,
@@ -42,12 +46,41 @@ export class CategoriesPage implements OnInit {
   public modalOpen = signal<boolean>(false);
   public categoryIdToDelete = signal<string | null>(null);
 
+  /** Referencia al componente hijo del formulario */
+  private readonly categoryFormRef = viewChild(CategoryFormComponent);
+
+  private readonly configService = inject(ConfigService);
+  private readonly router = inject(Router);
+
   constructor() {
     addIcons({ createOutline, trashOutline, arrowBackOutline, pricetagsOutline });
+
+    // Proteger la ruta: si las categorías se deshabilitan, salir al home
+    effect(() => {
+      if (!this.configService.showCategories()) {
+        this.router.navigate(['/home'], { replaceUrl: true });
+      }
+    });
   }
 
   async ngOnInit(): Promise<void> {
     await this.categoryService.loadCategories();
+  }
+
+  /** Maneja el pull-to-refresh */
+  async handleRefresh(event: any): Promise<void> {
+    // Resetear el estado de la interfaz como en una recarga real
+    this.editMode.set(false);
+    this.categoryToEdit.set(undefined);
+    this.modalOpen.set(false);
+    this.categoryIdToDelete.set(null);
+    this.categoryFormRef()?.resetForm();
+
+    await this.configService.forceFetchFlag();
+    await this.categoryService.loadCategories();
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
   }
 
   /** Maneja el guardado de una categoría (crear o actualizar) */

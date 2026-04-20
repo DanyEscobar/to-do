@@ -57,9 +57,14 @@ export class CategoryFormComponent implements OnChanges {
     }
 
     if (changes['editMode'] && !this.editMode()) {
-      this.categoryForm.reset({ name: '' });
-      this.selectedColor.set(CATEGORY_COLORS[0]);
+      this.resetForm();
     }
+  }
+
+  /** Resetea el formulario a su estado inicial (útil para pull-to-refresh) */
+  public resetForm(): void {
+    this.categoryForm.reset({ name: '' });
+    this.selectedColor.set(CATEGORY_COLORS[0]);
   }
 
   /** Selecciona un color de la paleta */

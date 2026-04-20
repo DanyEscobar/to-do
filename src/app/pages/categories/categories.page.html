@@ -12,6 +12,10 @@
 
 <ion-content class="ion-padding categories-content">
 
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- Formulario de categoría -->
   <app-category-form
     [editMode]="editMode()"

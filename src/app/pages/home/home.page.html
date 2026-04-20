@@ -97,6 +97,7 @@
   <app-task-list
     [tasks]="tasks()"
     [filterByCategory]="selectedCategory()"
+    [showCategories]="showCategories()"
     (editTask)="onEdit($event)"
     (deleteTask)="onDelete($event)"
     (toggleTask)="onToggle()"

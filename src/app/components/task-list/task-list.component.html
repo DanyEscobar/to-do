@@ -19,7 +19,7 @@
           <h2 class="task-title" [class.completed-text]="task.completed">
             {{ task.title }}
           </h2>
-          @if (task.categoryId) {
+          @if (showCategories() && task.categoryId) {
             <ion-chip class="category-chip" [style.--background]="categoryService.getCategoryColor(task.categoryId) + '18'" [style.--color]="categoryService.getCategoryColor(task.categoryId)">
               <span class="category-dot" [style.background-color]="categoryService.getCategoryColor(task.categoryId)"></span>
               {{ categoryService.getCategoryName(task.categoryId) }}

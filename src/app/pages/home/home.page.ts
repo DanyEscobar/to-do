@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButton, IonButtons, IonIcon, IonChip, IonLabel,
@@ -52,6 +52,9 @@ export class HomePage implements OnInit {
   public editMode = signal<boolean>(false);
   public taskToEdit = signal<Task | undefined>(undefined);
 
+  /** Referencia al componente hijo del formulario */
+  private readonly taskFormRef = viewChild(TaskFormComponent);
+
   /** Feature flag de Firebase */
   public showCategories = this.configService.showCategories;
 
@@ -87,8 +90,19 @@ export class HomePage implements OnInit {
 
   /** Maneja el pull-to-refresh para recargar los datos */
   async handleRefresh(event: any): Promise<void> {
+    // Resetear el estado de la interfaz como en una recarga real
+    this.editMode.set(false);
+    this.taskToEdit.set(undefined);
+    this.selectedCategory.set('');
+    this.taskFormRef()?.resetForm();
+    
+    await this.configService.forceFetchFlag();
     await this.initData();
-    event.target.complete();
+    // Añadimos un pequeño timeout para que la animación sea visible,
+    // ya que la lectura de LocalStorage es casi instantánea.
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
   }
 
   /** Maneja la creación o actualización de una tarea */

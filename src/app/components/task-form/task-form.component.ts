@@ -61,8 +61,13 @@ export class TaskFormComponent implements OnChanges {
     }
 
     if (changes['editMode'] && !this.editMode()) {
-      this.taskForm.reset({ title: '', categoryId: '' });
+      this.resetForm();
     }
+  }
+
+  /** Resetea el formulario a su estado inicial (útil para pull-to-refresh) */
+  public resetForm(): void {
+    this.taskForm.reset({ title: '', categoryId: '' });
   }
 
   /** Envía el formulario para crear o actualizar una tarea */

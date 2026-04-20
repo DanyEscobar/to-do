@@ -31,10 +31,10 @@ export class ConfigService {
   readonly error = computed(() => this.hasError());
 
   /**
-   * Obtiene y activa la configuración remota.
-   * Incluye manejo de errores para evitar que la app falle si Firebase no está disponible.
+   * Obtiene y activa la configuración remota manualmente.
+   * Útil para pull-to-refresh.
    */
-  private async fetchFlag(): Promise<void> {
+  public async forceFetchFlag(): Promise<void> {
     try {
       await fetchAndActivate(this.remoteConfig);
       const value = getBoolean(this.remoteConfig, 'showCategories');
@@ -58,9 +58,9 @@ export class ConfigService {
     // Polling cada 30 segundos
     interval(30000)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.fetchFlag());
+      .subscribe(() => this.forceFetchFlag());
 
     // Carga inmediata la primera vez
-    this.fetchFlag();
+    this.forceFetchFlag();
   }
 }
