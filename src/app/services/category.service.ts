@@ -33,9 +33,11 @@ export class CategoryService {
       const { value } = await Preferences.get({ key: this.STORAGE_KEY });
       const parsed = value ? JSON.parse(value) : null;
 
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (parsed !== null && Array.isArray(parsed)) {
+        // Puede ser un array vacío si el usuario borró todo
         this.categories.set(parsed);
       } else {
+        // Solo inicializar si es la primera vez que se abre la app
         await this.initDefaults();
       }
     } catch (error) {
