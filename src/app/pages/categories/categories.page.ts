@@ -126,16 +126,20 @@ export class CategoriesPage implements OnInit {
   /** Confirma la eliminación de una categoría */
   async confirmDelete(): Promise<void> {
     const id = this.categoryIdToDelete();
+    
+    // 1. Cerrar el modal INMEDIATAMENTE para evitar conflictos de overlay en producción
+    this.modalOpen.set(false);
+    this.categoryIdToDelete.set(null);
+    this.editMode.set(false);
+    this.categoryToEdit.set(undefined);
+
+    // 2. Realizar las operaciones asíncronas
     if (id) {
       await this.categoryService.deleteCategory(id);
       // Limpiar referencias en tareas
       await this.taskService.clearCategoryFromTasks(id);
       await this.presentToast('Categoría eliminada');
     }
-    this.modalOpen.set(false);
-    this.categoryIdToDelete.set(null);
-    this.editMode.set(false);
-    this.categoryToEdit.set(undefined);
   }
 
   /** Cancela la eliminación */
