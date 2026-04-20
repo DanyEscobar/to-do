@@ -1,10 +1,10 @@
 import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
-  IonButton, IonButtons, IonIcon, IonChip, IonLabel
+  IonButton, IonButtons, IonIcon, IonChip, IonLabel,
+  IonRefresher, IonRefresherContent
 } from '@ionic/angular/standalone';
 import { Task } from '../../interfaces/task.interface';
-import { Category } from '../../interfaces/category.interface';
 import { TaskService } from '../../services/task.service';
 import { CategoryService } from '../../services/category.service';
 import { ConfigService } from '../../services/config.service';
@@ -30,6 +30,7 @@ import {
   imports: [
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonButton, IonButtons, IonIcon, IonChip, IonLabel,
+    IonRefresher, IonRefresherContent,
     TaskFormComponent, TaskListComponent,
   ],
   standalone: true,
@@ -82,6 +83,12 @@ export class HomePage implements OnInit {
     if (value) {
       this.selectedCategory.set(value);
     }
+  }
+
+  /** Maneja el pull-to-refresh para recargar los datos */
+  async handleRefresh(event: any): Promise<void> {
+    await this.initData();
+    event.target.complete();
   }
 
   /** Maneja la creación o actualización de una tarea */

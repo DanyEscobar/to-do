@@ -24,6 +24,10 @@
 
 <ion-content class="home-content ion-padding">
 
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- Estadísticas rápidas -->
   @if (tasks().length > 0) {
     <div class="stats-row animate-fade-in-up">
