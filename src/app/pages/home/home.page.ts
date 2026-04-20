@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy, v
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButton, IonButtons, IonIcon, IonChip, IonLabel,
-  IonRefresher, IonRefresherContent
+  IonRefresher, IonRefresherContent, IonToast
 } from '@ionic/angular/standalone';
 import { Task } from '../../interfaces/task.interface';
 import { TaskService } from '../../services/task.service';
@@ -30,7 +30,7 @@ import {
   imports: [
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonButton, IonButtons, IonIcon, IonChip, IonLabel,
-    IonRefresher, IonRefresherContent,
+    IonRefresher, IonRefresherContent, IonToast,
     TaskFormComponent, TaskListComponent,
   ],
   standalone: true,

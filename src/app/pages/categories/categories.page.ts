@@ -3,7 +3,7 @@ import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButtons, IonBackButton, IonButton, IonIcon,
   IonList, IonItem, IonLabel,
-  IonRefresher, IonRefresherContent
+  IonRefresher, IonRefresherContent, IonToast
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
@@ -26,7 +26,7 @@ import { ToastController } from '@ionic/angular';
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonButtons, IonBackButton, IonButton, IonIcon,
     IonList, IonItem, IonLabel,
-    IonRefresher, IonRefresherContent,
+    IonRefresher, IonRefresherContent, IonToast,
     CategoryFormComponent, DeleteModalComponent,
   ],
   standalone: true,
