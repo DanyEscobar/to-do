@@ -13,7 +13,7 @@ Aplicación móvil híbrida de gestión de tareas desarrollada con **Ionic 8**, 
   [Ver video demo](https://drive.google.com/file/d/1P3in8yRlJ_i47xk7SMnHbDXhR0pcyoF5/view?usp=drive_link)
 
 - ☁️ **Drive Firebase Remote Config:**  
-  https://drive.google.com/file/d/1P3in8yRlJ_i47xk7SMnHbDXhR0pcyoF5/view?usp=sharing
+  https://drive.google.com/drive/folders/1o_yx7sBUiUla7w1yibtYZJ0eKL3_EhBo?usp=sharing
 
 - 🌐 **Netlify (Web):**  
   [https://to-do-app-0125.netlify.app](https://to-do-app-0125.netlify.app)
